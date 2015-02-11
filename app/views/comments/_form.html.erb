@@ -1,15 +1,45 @@
+<head>
+  <script type="text/javascript">
+$(document).ready(function(){}
+  var x = document.forms["label"]["body"].value;
+  if (x == null || x == "") {
+        alert("Name must be filled out");
+        return false;
+    }
+}
+  </script>
+</head>
+
+
+<% if user_signed_in? %>
+<% if current_user.is_active==true %>
 <h3>Post a Comment</h3>
 
-<%= form_for [ @article, @comment ] do |f| %>
+<%= form_for [ @article, @comment ], remote: true do |f| %>
+<%= f.hidden_field :user_id, :value => current_user.id %>
+<% if @comment.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@comment.errors.count, "error") %> prohibited this comment from being saved:</h2>
+
+      <ul>
+      <% @comment.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
   <p>
-    <%= f.label :author_name, "Your Name" %><br/>
-    <%= f.text_field :author_name %>
+     <h2 id= "label"><%= f.label :body %></h2>
+    <h2 id ="body"><%= f.text_area :body%></h2>
   </p>
+ 
   <p>
-    <%= f.label :body %><br/>
-    <%= f.text_area :body %>
-  </p>
-  <p>
+ 
     <%= f.submit 'Submit' %>
   </p>
 <% end %>
+<% end %>
+<% end %>
+<script>
+
+</script>

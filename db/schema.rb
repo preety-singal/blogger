@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150203110927) do
+ActiveRecord::Schema.define(version: 20150209084116) do
 
   create_table "articles", force: :cascade do |t|
     t.string   "title",              limit: 255
@@ -22,6 +22,7 @@ ActiveRecord::Schema.define(version: 20150203110927) do
     t.string   "image_content_type", limit: 255
     t.integer  "image_file_size",    limit: 4
     t.datetime "image_updated_at"
+    t.integer  "user_id",            limit: 4
   end
 
   create_table "attachments", force: :cascade do |t|
@@ -42,6 +43,7 @@ ActiveRecord::Schema.define(version: 20150203110927) do
     t.integer  "article_id",  limit: 4
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
+    t.integer  "user_id",     limit: 4
   end
 
   add_index "comments", ["article_id"], name: "index_comments_on_article_id", using: :btree
@@ -61,6 +63,26 @@ ActiveRecord::Schema.define(version: 20150203110927) do
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
   end
+
+  create_table "users", force: :cascade do |t|
+    t.string   "email",                  limit: 255, default: "",    null: false
+    t.string   "encrypted_password",     limit: 255, default: "",    null: false
+    t.string   "reset_password_token",   limit: 255
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.integer  "sign_in_count",          limit: 4,   default: 0,     null: false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.string   "current_sign_in_ip",     limit: 255
+    t.string   "last_sign_in_ip",        limit: 255
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.boolean  "roles",                  limit: 1,   default: false
+    t.boolean  "is_active",              limit: 1,   default: true
+  end
+
+  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
+  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
   add_foreign_key "attachments", "articles"
   add_foreign_key "comments", "articles"

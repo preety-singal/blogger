@@ -4,6 +4,10 @@
     <li><%= error %></li>
   <% end %>
   </ul>
+
+  <%= f.hidden_field :user_id, :value => current_user.id %>
+  
+  
   <p>
     <%= f.label :title %><br />
     <%= f.text_field :title %>
@@ -13,9 +17,27 @@
     <%= f.text_area :body %>
   </p>
   <p>
+  <%= f.label :tags %>
+  <%= f.text_field :body%>
+  </p>
+  <%# end %>
+    <% if @article.image.exists? %>
+      <%= image_tag @article.image.url(:medium) %><br/>
+  <% end %>
+  <%= f.label :image, "Attach a New Image" %><br />
+  <%= f.file_field :image %>
+</p>
+<p>
+
+  <%= f.label :image, "Attach multiple Images" %><br />
+  <%= file_field_tag "images[]",  multiple: true %>
+  </p>
+   
+  <p>
     <%= f.submit %>
   </p>
-<% end %>
 
+<% end %>
+<%= link_to " Back to Articles List", articles_path, :class => 'new_article' %>
 
 

@@ -1,3 +1,12 @@
+<head>
+<style type="text/css">
+ 
+</style>
+</head>
+
+<% if user_signed_in? %>
+
+
 <%= form_for(@article, html: {multipart: true}) do |f| %>
 
   <ul>
@@ -5,6 +14,7 @@
     <li><%= error %></li>
   <% end %>
   </ul>
+  
   <p>
     <%= f.label :title %><br />
     <%= f.text_field :title %>
@@ -25,11 +35,14 @@
   <%= f.file_field :image %>
 </p>
 <p>
-def check_box(method, options = {}, checked_value = "1", unchecked_value = "0")
+
  <%= f.label :image, "Attach multiple Images" %><br />
   <%= file_field_tag "images[]",  multiple: true %>
   </p>
   <p>
     <%= f.submit %>
   </p>
+ <% end %>
 <% end %>
+
+<%#= link_to " Back to Articles List", articles_path, :class => 'new_article' %>

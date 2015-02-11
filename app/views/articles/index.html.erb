@@ -1,11 +1,51 @@
-<h1>All Articles</h1>
+<head>
+<style type="text/css">
+	a.new_article
+ {
+  top: 75px;
 
-<ul id="articles">
+ }
+ .links{
+ 	margin-top: 0px;
+ 	height: 60px;
+display: inline-block;
+padding-left: 30px;
+ }
+ .btn{
+    line-height: 0.4571;;
+  }
+</style>
+</head>
+
+<%if user_signed_in?%>
+<% if current_user.roles==false%>
+<% if current_user.is_active==true %>
+<h3 class="links"><%= link_to "Delete account", destroyuser_path(:user_id=>current_user.id), method: :delete,data: {confirm: "Really want to delete the account?"}%></h3>
+<h3  class="links"><%= link_to "Deactivate account", deactivate_account_path(:user_id=>current_user.id), method: :delete,data: {confirm: "Really want to deactivate the account?"}%></h3>
+<% end%>
+<% if current_user.is_active==false %>
+<h3  class="links"><%= link_to "Activate account", activate_account_path(:user_id=>current_user.id)%></h3>
+<% end%>
+<% end%>
+<% if current_user.is_active==true %>
+
+<h3 class="links"><%= link_to "My Articles",  myarticles_path(:user_id=>current_user.id)%></h3>
+<% end%>
+<%if current_user.roles==true%>
+<h3 class="links"><%= link_to "User Details", user_details_path(:user_id=>current_user.id)%></h3>
+<% end %>
+ <% if current_user.is_active==true %>
+      <%= link_to "New Article", new_article_path, :class => 'new_article' %>
+     <% end%>
+<% end %>
+<h1 style="text-align: center">All Articles</h1>
+ <ul id="articles">
   <% @articles.each do |article| %>
     <li>
       <%= link_to article.title, article_path(article) %>
+      </li>
       
-    </li>
   <% end %>
-  <%= link_to "New Article", new_article_path %>
+
 </ul>
+ 
