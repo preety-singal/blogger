@@ -1,0 +1,36 @@
+<head>
+  <style type="text/css">
+  .btn{
+    line-height: 0.4571;;
+  }</style>
+</head>
+
+<ul>
+
+<h3>Articles
+<% if @user.articles.size==0%>
+<%= "no articles yet" %>
+<%else%>
+(<%= @user.articles.size %>)</h3>
+<% end %>
+<br>
+  <% @user.articles.each do |article| %>
+    <li>
+      <h2><%= link_to article.title, article_path(article) %></h2>
+      
+    </li>
+    <% if( current_user.roles==true)|| (current_user.id ==article.user_id) %>
+            <button type="button" class="btn btn-primary"><%= link_to "Edit", edit_article_path(article) %></button>
+           <button type="button" class="btn btn-primary"><%= link_to 'delete', article_path(article), method: :delete,data: {confirm: "Really want to delete the article?"}%></button>
+         </br>
+   <% end %>     
+  <% end %>
+ 
+   <br>
+ <button type="button" class="btn btn-primary"> <%= link_to " Back", articles_path %></button>
+
+
+ </ul>
+<% if current_user.is_active==true %>
+ <%= link_to "Create a New article", new_article_path, :class => 'new_article'%>
+ <% end %>

@@ -1,0 +1,11 @@
+
+// $('.flash').html("<%= escape_javascript(render(:partial => 'form')) %>");
+$('textarea').empty();
+
+$('#com').html("<%= escape_javascript(render(:partial => 'articles/comment',collection: @article.comments)) %>");
+
+$('.flash').html("<%= escape_javascript(render(:partial => 'comments/form')) %>");
+
+
+ 
+$("#comment_body").val('');

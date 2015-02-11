@@ -10,7 +10,7 @@ def destroy
 	@tag = Tag.find(params[:id])
 	 @tag.articles.delete_all
 	@tag.destroy
-	# debugger
+	
 	flash.notice = "tag '#{@tag.name}' Deleted!"
 	redirect_to tags_path
 end
