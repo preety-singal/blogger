@@ -6,7 +6,11 @@
 {
   font-size: 16px;
 height: 60px;
+color:  rgb(208, 118, 29);
 }
+.my_article{float: right; color: rgb(208, 118, 29); font-size: 18px;}
+.user_details{margin-left: 70px; color: rgb(208, 118, 29); font-size: 18px;}
+.email{color:  rgb(208, 118, 29);}
 </style>
   <title>Blogger</title>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
@@ -15,14 +19,33 @@ height: 60px;
 </head>
 <body>
 <p class="flash"><%= flash.notice %></p>
+<h1>
 <div id="user_nav">
-  <% if user_signed_in? %>
-    Signed in as <%= current_user.email %>. Not you?
+
+<% if user_signed_in? && current_user.is_active== true%>
+  <% if user_signed_in?%>
+    Signed in as <%= link_to current_user.email, user_profile_path(:u_id=>current_user.id), :class=>'email' %>. Not you?
+    <%= link_to "Sign out", destroy_user_session_path, :method => :delete %>
+    <%= link_to "My Articles",  myarticles_path(:user_id=>current_user.id), :class=>'my_article'%>
+    <%if current_user.roles==true%>
+<h3><%= link_to "User Details", user_details_path(:user_id=>current_user.id),:class=>'user_details'%></h3>
+<% end %>
+  <% else %>
+    <%= link_to "Sign up", new_user_registration_path %> or 
+    <%= link_to "sign in", new_user_session_path %>
+  <% end %>
+<%else%>
+    <% if user_signed_in?%>
+     <marquee> <p style="color: red">Your Account is not Active</p></marquee>
+    Signed in as <%= link_to current_user.email, user_profile_path(:u_id=>current_user.id) %>. Not you?
     <%= link_to "Sign out", destroy_user_session_path, :method => :delete %>
   <% else %>
-    <%= link_to "Sign up", new_user_registration_path %> or <%= link_to "sign in", new_user_session_path %>
+    <%= link_to "Sign up", new_user_registration_path %> or 
+    <%= link_to "sign in", new_user_session_path %>
   <% end %>
+<% end %>
 </div>
+</h1>
 <%= yield %>
 
 </body>

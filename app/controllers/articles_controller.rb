@@ -6,6 +6,7 @@ class ArticlesController < ApplicationController
 	include ArticlesHelper
 def index
   @articles = Article.all
+
 end
 def new
 	@article = Article.new
@@ -20,7 +21,8 @@ def show
 end
 def create
   @article= Article.new(article_params)
-  if @article.save
+  debugger
+  if @article.save(article_params)
    flash.notice = "Article '#{@article.title}' created!"
   	redirect_to article_path(@article)
   else
@@ -75,13 +77,13 @@ def change_role
 redirect_to user_details_path
 else
   end
-    def activate_account!
+def activate_account!
       @user =User.find(params[:user_id])
      if @user.is_active==false
-   @user.is_active= true
- end
- @user.save
- redirect_to articles_path
+          @user.is_active= true
+          @user.save
+           redirect_to user_profile_path(@user)
+      end
  end
 
  def deactivate_account!
@@ -89,11 +91,11 @@ else
   @user =User.find(params[:user_id])
    if @user.is_active==true
    @user.is_active=false
- end
- @user.save!
- redirect_to articles_path
+     @user.save
+     redirect_to user_profile_path(@user)
+    end
  
-end
+    end
   #def destroy_article
     #@article =Article.find(params[:article_id])
     #@article.destroy
@@ -109,6 +111,9 @@ def destroy_users
   @user = User.find(params[:user_id])
   @user.destroy
   redirect_to articles_path
+end
+def user_profile
+    @user= User.find(params[:u_id])
 end
 
 def destroy_image
@@ -132,10 +137,10 @@ def update
     @attachment.article_id = @article.id
     @attachment.photo = image
     @attachment.save!
-end
-end
+    end
 	flash.notice = "Article '#{@article.title}' Updated!"
 	redirect_to article_path(@article)
 end
 
+end
 end

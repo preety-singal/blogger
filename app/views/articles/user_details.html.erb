@@ -9,21 +9,22 @@
 </style>
 </head>
 
-<div class="col-md-4"><h4>User Email</h4></div>
-    <div class="col-md-4"><h4>Role</h4></div>
-    <div class="col-md-4"><h4>Change Role</h4></div>
+<div class="col-md-3"><h4>User Email</h4></div>
+    <div class="col-md-3"><h4>Role</h4></div>
+        <div class="col-md-3"><h4>Account Status</h4></div>
+    <div class="col-md-3"><h4>Change Role</h4></div>
     
   <% @user.each do |user| %>
   <% if user.is_active==true %>
-  <div class="col-md-4">
-     <%=  user.email%></div>
-     <div class="col-md-4"><%= user.roles%></div>
+     <div class="col-md-3"><%=  user.email%></div>
+     <div class="col-md-3"><%= user.roles%></div>
+     <div class="col-md-3"><%= user.is_active%></div>
       <%if user_signed_in?%>
 
     <% if user.roles==true%>
-    <div class="col-md-4"> NA </div>
+    <div class="col-md-3"> NA </div>
     <% else %>
-     <div class="col-md-4"><%= link_to "promote",  change_role_path(:user_id=>user.id)%></div>
+     <div class="col-md-3"><%= link_to "promote",  change_role_path(:user_id=>user.id)%></div>
 
     <% end %>
     <% end %>

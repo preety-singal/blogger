@@ -1,5 +1,6 @@
 <head>
   <script type="text/javascript">
+  /*
 $(document).ready(function(){}
   var x = document.forms["label"]["body"].value;
   if (x == null || x == "") {
@@ -30,7 +31,7 @@ $(document).ready(function(){}
   <% end %>
   <p>
      <h2 id= "label"><%= f.label :body %></h2>
-    <h2 id ="body"><%= f.text_area :body%></h2>
+    <h2 id ="body"><%= f.text_area :body, :required=> true%></h2>
   </p>
  
   <p>

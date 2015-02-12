@@ -1,6 +1,13 @@
 class TagsController < ApplicationController
-	def show
-  @tag = Tag.find(params[:id])
+	
+def show
+	   @tag= Tag.find(params[:id])
+		if params[:tag]
+
+	else
+		@article = Article.find(params[:article_id])
+	end
+	
 end
 def index
 	@tags = Tag.all

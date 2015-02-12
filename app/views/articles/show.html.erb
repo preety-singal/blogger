@@ -11,25 +11,26 @@
 <% if user_signed_in? %>
 <% if current_user.is_active==true %>
   <% if (current_user.roles==true) || (current_user.id ==@article.user_id) %>
-<button type="button" class="btn btn-primary"><%= link_to "Edit article", edit_article_path(@article) %></button>
-<button type="button" class="btn btn-primary"><%= link_to "Delete article", article_path(@article), method: :delete,data: {confirm: "Really delete the article?"}
- %></button>
-
+     <button type="button" class="btn btn-primary"><%= link_to "Edit article", edit_article_path(@article) %></button>
+    <button type="button" class="btn btn-primary"><%= link_to "Delete article", article_path(@article), method: :delete,data: {confirm: "Really delete the article?"}%></button>
+<% end %>
+<% end %>
+<% end %>
  <p>
   <h3>Tags:</h3>
   <% @article.tags.each do |tag| %>
-    <%= link_to tag.name, tag_path(tag) %>
+ 
+    <%= link_to tag.name, tag_path(:id => tag, :article_id => @article.id)  %>
   <% end %>
 </p>
-<% end %>
-<% end %>
+
 <% if @article.image.exists? %>
        <%= image_tag @article.image.url(:medium) %>
        <% else %>
        <h2> no image </h2>
 
   <% end %>
-<% end %>
+
   <p>
   
   <% @attachment.each do |image| %>
@@ -51,9 +52,7 @@
 <div id='com'>
 <%= render partial: 'articles/comment', collection: @article.comments %>
 </div>
-<div class="flash">
-
-
+<div class="comment_form">
 <%= render partial: 'comments/form' %>
 </div>
 <%= link_to " Back to Articles List", articles_path, :class => 'new_article' %>
